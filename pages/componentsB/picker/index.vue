@@ -10,6 +10,7 @@
 					v-model="show"
 					:defaultRegion="defaultRegion"
 					:params="params"
+					end-year="2030"
 					@confirm="confirm"
 					:defaultSelector="defaultSelector"
 					:range="range"
@@ -22,23 +23,23 @@
 			<view class="u-config-title u-border-bottom">参数配置</view>
 			<view class="u-config-item">
 				<view class="u-item-title">Picker开关</view>
-				<u-subsection vibrateShort :current="status" :list="['显示', '隐藏']" @change="statusChange"></u-subsection>
+				<u-subsection :current="status" :list="['显示', '隐藏']" @change="statusChange"></u-subsection>
 			</view>
 			<view class="u-config-item">
 				<view class="u-item-title">模式选择</view>
-				<u-subsection vibrateShort :list="['单列', '多列', '时间', '地区']" @change="modeChange"></u-subsection>
+				<u-subsection :list="['单列', '多列', '时间', '地区']" @change="modeChange"></u-subsection>
 			</view>
 			<view class="u-config-item">
 				<view class="u-item-title">默认时间</view>
-				<u-subsection vibrateShort :list="['2019-12-11 20:15:35', '2020-02-05 13:09:42']" @change="defaultTimeChange"></u-subsection>
+				<u-subsection :list="['2019-12-11 20:15:35', '2020-02-05 13:09:42']" @change="defaultTimeChange"></u-subsection>
 			</view>
 			<view class="u-config-item">
 				<view class="u-item-title">显示时分秒</view>
-				<u-subsection vibrateShort :list="['显示', '隐藏']" @change="minSecChange"></u-subsection>
+				<u-subsection :list="['显示', '隐藏']" @change="minSecChange"></u-subsection>
 			</view>
 			<view class="u-config-item">
 				<view class="u-item-title">默认地区</view>
-				<u-subsection vibrateShort :list="['广东-深圳-宝安', '海南-三亚-海棠']" @change="defaultRegionChange"></u-subsection>
+				<u-subsection :list="['广东-深圳-宝安', '海南-三亚-海棠']" @change="defaultRegionChange"></u-subsection>
 			</view>
 		</view>
 	</view>
@@ -65,7 +66,8 @@ export default {
 				second: true,
 				province: true,
 				city: true,
-				area: true
+				area: true,
+				timestamp: true
 			}
 		};
 	},
@@ -115,12 +117,13 @@ export default {
 			this.show = true;
 		},
 		confirm(e) {
+			// console.log(e);
 			this.input = '';
 			if (this.mode == 'time') {
 				if (this.params.year) this.input += e.year;
 				if (this.params.month) this.input += '-' + e.month;
 				if (this.params.day) this.input += '-' + e.day;
-				if (this.params.hour) this.input += ' ' + e.day;
+				if (this.params.hour) this.input += ' ' + e.hour;
 				if (this.params.minute) this.input += ':' + e.minute;
 				if (this.params.second) this.input += ':' + e.second;
 			} else if (this.mode == 'region') {
@@ -133,7 +136,7 @@ export default {
 		},
 		columnchange(e) {
 			let column = e.column, index = e.index;
-			this.defaultSelector.splice(column, 1, index)
+			this.defaultSelector[column] = index;
 			switch (column) {
 				case 0: 
 					switch (index) {
@@ -175,7 +178,6 @@ export default {
 					this.defaultSelector.splice(2, 1, 0)
 					break
 			}
-			this.$forceUpdate()
 		}
 	}
 };

@@ -4,7 +4,7 @@
 			<view class="u-demo-title">演示效果</view>
 			<view class="u-demo-area">
 				<u-toast ref="uToast"></u-toast>
-				<u-sticky :offset-top="offsetTop" :enable="enable" @fixed="fixed">
+				<u-sticky :offset-top="offsetTop" :enable="enable" @fixed="fixed" @unfixed="unfixed">
 					<view class="sticky">
 						宝剑锋从磨砺出,梅花香自苦寒来
 					</view>
@@ -17,11 +17,11 @@
 			</view>
 			<view class="u-config-item">
 				<view class="u-item-title">吸顶高度</view>
-				<u-subsection vibrateShort :list="[0, 120, 200]" @change="offsetTopChange"></u-subsection>
+				<u-subsection :list="[0, 120, 200]" @change="offsetTopChange"></u-subsection>
 			</view>
 			<view class="u-config-item">
 				<view class="u-item-title">状态</view>
-				<u-subsection vibrateShort :list="['允许吸顶', '禁止吸顶']" @change="enableChange"></u-subsection>
+				<u-subsection :list="['允许吸顶', '禁止吸顶']" @change="enableChange"></u-subsection>
 			</view>
 		</view>
 	</view>
@@ -50,6 +50,12 @@
 				this.$refs.uToast.show({
 					type: 'warning',
 					title: '触发吸顶'
+				})
+			},
+			unfixed() {
+				this.$refs.uToast.show({
+					type: 'success',
+					title: '取消吸顶'
 				})
 			}
 		}

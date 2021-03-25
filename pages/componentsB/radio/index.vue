@@ -4,10 +4,9 @@
 			<view class="u-demo-title">演示效果</view>
 			<view class="u-demo-area">
 				<view class="">
-					<u-radio-group :size="size" v-model="value" @change="radioGroupChange" :activeColor="activeColor">
-						<u-radio @change="radioChange" v-for="(item, index) in list" 
+					<u-radio-group :shape="shape" :size="size" :width="width" :wrap="wrap" v-model="value" @change="radioGroupChange" :activeColor="activeColor">
+						<u-radio @change="radioChange" v-for="(item, index) in list" :disabled="item.disabled"
 							:key="index" :name="item.name"
-							:shape="shape" :disabled="item.disabled"
 						>{{item.name}}</u-radio>
 					</u-radio-group>
 				</view>
@@ -22,23 +21,31 @@
 			</view>
 			<view class="u-config-item">
 				<view class="u-item-title">形状</view>
-				<u-subsection vibrateShort :list="['方形', '圆形']" @change="shapeChange"></u-subsection>
+				<u-subsection current="1" :list="['方形', '圆形']" @change="shapeChange"></u-subsection>
 			</view>
 			<view class="u-config-item">
 				<view class="u-item-title">整体大小(单位rpx)</view>
-				<u-subsection vibrateShort current="1" :list="['30', '40', '50']" @change="sizeChange"></u-subsection>
+				<u-subsection current="1" :list="['30', '40', '50']" @change="sizeChange"></u-subsection>
 			</view>
 			<view class="u-config-item">
 				<view class="u-item-title">激活颜色</view>
-				<u-subsection vibrateShort :list="['primary', 'error', 'warning', 'success', 'info']" @change="activeColorChange"></u-subsection>
+				<u-subsection :list="['primary', 'error', 'warning', 'success', 'info']" @change="activeColorChange"></u-subsection>
+			</view>
+			<view class="u-config-item">
+				<view class="u-item-title">每个占一行</view>
+				<u-subsection current="1" :list="['是', '否']" @change="wrapChange"></u-subsection>
+			</view>
+			<view class="u-config-item">
+				<view class="u-item-title">每个宽度50%</view>
+				<u-subsection current="1" :list="['是', '否']" @change="widthChange"></u-subsection>
 			</view>
 			<view class="u-config-item">
 				<view class="u-item-title">默认选中第一个</view>
-				<u-subsection vibrateShort current="1" :list="['是', '否']" @change="defaultChooseChange"></u-subsection>
+				<u-subsection current="1" :list="['是', '否']" @change="defaultChooseChange"></u-subsection>
 			</view>
 			<view class="u-config-item">
 				<view class="u-item-title">禁用第一个</view>
-				<u-subsection vibrateShort current="1" :list="['是', '否']" @change="disabledChange"></u-subsection>
+				<u-subsection current="1" :list="['是', '否']" @change="disabledChange"></u-subsection>
 			</view>
 		</view>
 	</view>
@@ -50,27 +57,34 @@
 			return {
 				list: [
 					{
-						name: 'apple',
+						name: '荔枝',
+						checked: true,
+						disabled: false
+					},
+					{
+						name: '香蕉',
 						checked: false,
 						disabled: false
 					},
 					{
-						name: 'banner',
+						name: '橙子',
 						checked: false,
 						disabled: false
 					},
 					{
-						name: 'orange',
+						name: '草莓',
 						checked: false,
 						disabled: false
 					}
 				],
 				disabled: false,
-				result: '',
-				shape: 'square',
-				value: '',
+				result: '荔枝',
+				shape: 'circle', 
+				value: '荔枝',
 				activeColor: '#2979ff',
-				size: 40
+				size: 34,
+				wrap: false,
+				width: 'auto'
 			}
 		},
 		methods: {
@@ -106,12 +120,18 @@
 			},
 			// 选中某个单选框时，由radio时触发
 			radioChange(e) {
-				// console.log(e);
+				//console.log(e);
 			},
 			// 选中任一radio时，由radio-group触发
 			radioGroupChange(e) {
 				this.result = e;
-				// console.log(e);
+				//console.log(e);
+			},
+			widthChange(index) {
+				this.width = index == 0 ? '50%' : '';
+			},
+			wrapChange(index) {
+				this.wrap = !index;
 			}
 		}
 	}

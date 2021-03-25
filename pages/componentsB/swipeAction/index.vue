@@ -32,11 +32,11 @@
 			<view class="u-config-title u-border-bottom">参数配置</view>
 			<view class="u-config-item">
 				<view class="u-item-title">状态(操作第一个)</view>
-				<u-subsection vibrateShort :current="1" :list="['打开', '关闭']" @change="showChange"></u-subsection>
+				<u-subsection :current="1" :list="['打开', '关闭']" @change="showChange"></u-subsection>
 			</view>
 			<view class="u-config-item">
 				<view class="u-item-title">禁止滑动</view>
-				<u-subsection vibrateShort :current="1" :list="['是', '否']" @change="disabledChange"></u-subsection>
+				<u-subsection :current="1" :list="['是', '否']" @change="disabledChange"></u-subsection>
 			</view>
 		</view>
 	</view>
@@ -46,7 +46,7 @@
 export default {
 	data() {
 		return {
-			list: [
+			list1: [
 				{
 					id: 1,
 					title: '长安回望绣成堆，山顶千门次第开，一骑红尘妃子笑，无人知是荔枝来',
@@ -66,6 +66,7 @@ export default {
 					show: false,
 				}
 			],
+			list: [],
 			disabled: false,
 			btnWidth: 180,
 			show: false,
@@ -84,6 +85,11 @@ export default {
 				}
 			]
 		};
+	},
+	onLoad() {
+		setTimeout(() => {
+			this.list = this.list1;
+		}, 0)
 	},
 	methods: {
 		disabledChange(index) {

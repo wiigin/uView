@@ -15,7 +15,7 @@
 			</view>
 			<view class="u-config-item">
 				<view class="u-item-title">状态</view>
-				<u-subsection vibrateShort :current="current" :list="['打开', '关闭']" @change="openModal"></u-subsection>
+				<u-subsection :current="current" :list="['打开', '关闭']" @change="openModal"></u-subsection>
 			</view>
 		</view>
 	</view>
@@ -29,7 +29,7 @@
 			}
 		},
 		onShow() {
-			this.$nextTick(function(){
+			this.$nextTick(() => {
 				this.current = 1;
 			})
 		},

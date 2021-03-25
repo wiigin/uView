@@ -4,7 +4,7 @@
 			<view class="u-demo-title">演示效果</view>
 			<view class="u-demo-area">
 				<u-toast ref="uToast"></u-toast>
-				<u-verification-code :seconds="seconds" @end="end" @start="start" ref="uCode" 
+				<u-verification-code :keep-running="true" :seconds="seconds" @end="end" @start="start" ref="uCode" 
 				@change="codeChange" :startText="startText" :changeText="changeText" 
 				:endText="endText"></u-verification-code>
 				<u-button @click="getCode">{{tips}}</u-button>
@@ -17,11 +17,11 @@
 			</view>
 			<view class="u-config-item">
 				<view class="u-item-title">倒计时间</view>
-				<u-subsection vibrateShort :current="0" :list="['60s', '10s', '5s']" @change="secondsChange"></u-subsection>
+				<u-subsection :current="0" :list="['60s', '10s', '5s']" @change="secondsChange"></u-subsection>
 			</view>
 			<view class="u-config-item">
 				<view class="u-item-title">自定义提示语</view>
-				<u-subsection vibrateShort :current="1" :list="['是', '否']" @change="textChange"></u-subsection>
+				<u-subsection :current="1" :list="['是', '否']" @change="textChange"></u-subsection>
 			</view>
 		</view>
 	</view>

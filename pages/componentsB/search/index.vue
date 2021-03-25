@@ -5,7 +5,7 @@
 			<view class="u-demo-area">
 				<u-toast ref="uToast"></u-toast>
 				<u-search v-model="value" @change="change" @custom="custom" @search="search" :shape="shape" :clearabled="clearabled" 
-				:show-action="showAction" :input-align="inputAlign"></u-search>
+				:show-action="showAction" :input-align="inputAlign" @clear="clear"></u-search>
 			</view>
 		</view>
 		<view class="u-config-wrap">
@@ -14,23 +14,23 @@
 			</view>
 			<view class="u-config-item">
 				<view class="u-item-title">初始值</view>
-				<u-subsection vibrateShort :list="['空', '天山雪莲']" @change="valueChange"></u-subsection>
+				<u-subsection :list="['空', '天山雪莲']" @change="valueChange"></u-subsection>
 			</view>
 			<view class="u-config-item">
 				<view class="u-item-title">搜索框形状</view>
-				<u-subsection vibrateShort :list="['圆形', '方形']" @change="shapeChange"></u-subsection>
+				<u-subsection :list="['圆形', '方形']" @change="shapeChange"></u-subsection>
 			</view>
 			<view class="u-config-item">
 				<view class="u-item-title">清除控件</view>
-				<u-subsection vibrateShort :list="['启用', '关闭']" @change="clearabledChange"></u-subsection>
+				<u-subsection :list="['启用', '关闭']" @change="clearabledChange"></u-subsection>
 			</view>
 			<view class="u-config-item">
 				<view class="u-item-title">右侧控件</view>
-				<u-subsection vibrateShort :list="['启用', '关闭']" @change="showActionChange"></u-subsection>
+				<u-subsection :list="['启用', '关闭']" @change="showActionChange"></u-subsection>
 			</view>
 			<view class="u-config-item">
 				<view class="u-item-title">水平对齐方式</view>
-				<u-subsection vibrateShort :list="['左', '中', '右']" @change="inputAlignChange"></u-subsection>
+				<u-subsection :list="['左', '中', '右']" @change="inputAlignChange"></u-subsection>
 			</view>
 		</view>
 	</view>
@@ -83,6 +83,9 @@
 					title: '搜索内容为：' + value,
 					type: 'success'
 				})
+			},
+			clear() {
+				// console.log(this.value);
 			}
 		}
 	}

@@ -1,5 +1,5 @@
 <template>
-	<view :id="elId" class="u-grid" :class="{'u-border-top u-border-left': border}" :style="[gridStyle]"><slot /></view>
+	<view class="u-grid" :class="{'u-border-top u-border-left': border}" :style="[gridStyle]"><slot /></view>
 </template>
 
 <script>
@@ -40,21 +40,28 @@ export default {
 	data() {
 		return {
 			index: 0,
-			elId: this.$u.guid(),
-			// grid组件宽度，这里不用flex布局，是因为在微信小程序上，组件体现形式为
-			// 页面上带上了组件结构元素，导致状态错乱
-			width: 0, 
 		}
 	},
-	provide() {
-		return {
-			uGrid: this
-		}
+	watch: {
+		// 当父组件需要子组件需要共享的参数发生了变化，手动通知子组件
+		parentData() {
+			if(this.children.length) {
+				this.children.map(child => {
+					// 判断子组件(u-radio)如果有updateParentData方法的话，就就执行(执行的结果是子组件重新从父组件拉取了最新的值)
+					typeof(child.updateParentData) == 'function' && child.updateParentData();
+				})
+			}
+		},
 	},
-	mounted() {
-		this.getGridRect();
+	created() {
+		// 如果将children定义在data中，在微信小程序会造成循环引用而报错
+		this.children = [];
 	},
 	computed: {
+		// 计算父组件的值是否发生变化
+		parentData() {
+			return [this.hoverClass, this.col, this.size, this.border];
+		},
 		// 宫格对齐方式
 		gridStyle() {
 			let style = {};
@@ -76,22 +83,26 @@ export default {
 	methods: {
 		click(index) {
 			this.$emit('click', index);
-		},
-		async getGridRect() {
-			let rect = await this.$uGetRect(`#${this.elId}`);
-			// 小米和华为手机可能会导致宽度计算问题(特定机型)，宫格布局变乱，故在这里减少两个像素
-			this.width = rect.width - 2;
 		}
 	}
-	
 };
 </script>
 
 <style scoped lang="scss">
+@import "../../libs/css/style.components.scss";
+
 .u-grid {
-	display: flex;
 	width: 100%;
-	align-items: center;
+	/* #ifdef MP */
+	position: relative;
+	box-sizing: border-box;
+	overflow: hidden;
+	/* #endif */
+	
+	/* #ifndef MP */
+	@include vue-flex;
 	flex-wrap: wrap;
+	align-items: center;
+	/* #endif */
 }
 </style>
